@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum Status { Current, Lose, Win}
 public class GameManager : MonoBehaviour
@@ -130,6 +131,16 @@ public class GameManager : MonoBehaviour
                 UIManager.instance.stars[1].enabled = false;
                 UIManager.instance.stars[2].enabled = false;
         }
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     //ilk resim 50 çukalata 70 bal

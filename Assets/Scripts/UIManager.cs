@@ -37,7 +37,6 @@ public class UIManager : MonoBehaviour
     }
 
 
-
     #region CheckForButtonClick
 
     public void OnPointingDownMilkButton()
