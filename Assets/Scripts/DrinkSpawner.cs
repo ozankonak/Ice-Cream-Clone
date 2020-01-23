@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class DrinkSpawner : MonoBehaviour
 {
+    #region Variables
+
     public GameObject milk, honey, chocolate;
 
     private float timeToSpawn = 0.2f;
@@ -17,12 +19,18 @@ public class DrinkSpawner : MonoBehaviour
 
     private GameObject spawn = null;
 
+    #endregion
 
+    #region Unity Functions
     private void Update()
     {
         CheckForButtons();
         CheckForCanSpawn();
     }
+
+    #endregion
+
+    #region Private Functions
 
     private void CheckForButtons()
     {
@@ -62,4 +70,6 @@ public class DrinkSpawner : MonoBehaviour
             GameManager.instance.CanSpawn = false;
         }
     }
+
+    #endregion
 }

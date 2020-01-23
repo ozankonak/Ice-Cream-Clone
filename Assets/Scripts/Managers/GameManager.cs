@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum Status { Current, Lose, Win}
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public Status gameStatus = Status.Current;
+    #region Variables
 
     public float MaxNumberOfSpawn { get; } = 120;
     public float AmountOfMilk { get; set; }
     public float AmountOfHoney { get; set; }
     public float AmountOfChocolate { get; set; }
 
+    [Header("Amount Part")]
     [SerializeField] private int desiredMilkAmount;
     [SerializeField] private int desiredHoneyAmount;
     [SerializeField] private int desiredChocolateAmount;
@@ -34,10 +35,32 @@ public class GameManager : MonoBehaviour
 
     private bool checkMatch = true;
 
+    [Header("Coin Part")]
+    //For Coins
+    [SerializeField]
+    private int amountOfCoinInThisLevel;
+    private int currentCoin;
+    private int totalCoin;
+
+    #endregion
+
+    #region Unity Functions
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        if (PlayerPrefs.GetInt("coin") != 0)
+        {
+            totalCoin = PlayerPrefs.GetInt("coin");
+            UIManager.instance.coinText.text = PlayerPrefs.GetInt("coin").ToString();
+        }
+        else
+            totalCoin = 0;
+
     }
 
     private void Update()
@@ -45,6 +68,11 @@ public class GameManager : MonoBehaviour
         MatchSystem();
     }
 
+    #endregion
+
+    #region Private Functions
+
+    
     private void MatchSystem()
     {
         if (!CanSpawn && checkMatch)
@@ -84,6 +112,12 @@ public class GameManager : MonoBehaviour
         UIManager.instance.glassGameObject.SetActive(false);
         UIManager.instance.levelCompletedPanel.SetActive(true);
         UIManager.instance.matchRateText.text = "Match Rate : " + ((int)average).ToString();
+        
+        //Add Coin 
+        currentCoin = (int)(amountOfCoinInThisLevel * average /100);
+        totalCoin += currentCoin;
+        PlayerPrefs.SetInt("coin",totalCoin);
+        UIManager.instance.coinText.text = PlayerPrefs.GetInt("coin").ToString();
 
     }
 
@@ -133,6 +167,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Public Functions
+
     public void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -143,5 +181,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    //ilk resim 50 çukalata 70 bal
+    #endregion
+
+
+
 }

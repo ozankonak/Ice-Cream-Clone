@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    #region Variables
+
     public static UIManager instance;
 
     public Slider ProgressionSlider;
@@ -14,12 +16,16 @@ public class UIManager : MonoBehaviour
 
     public GameObject glassGameObject;
     public GameObject levelCompletedPanel;
+
+    public Text coinText;
     public Text matchRateText;
     public bool MilkButtonPressed { get; private set; }
     public bool HoneyButtonPressed { get; private set; }
     public bool ChocolateButtonPressed { get; private set; }
 
+    #endregion
 
+    #region Unity Functions
     private void Awake()
     {
         instance = this;
@@ -36,8 +42,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    #endregion
 
-    #region CheckForButtonClick
+    #region Button Configuration
 
     public void OnPointingDownMilkButton()
     {
@@ -70,6 +77,5 @@ public class UIManager : MonoBehaviour
     }
 
     #endregion
-
 
 } 
